@@ -83,31 +83,12 @@ find_number(Lines, Index, Commonality) ->
             find_number(Lines1, Index + 1, Commonality)
     end.
 
-%% I could have reused this between part 1 and part 2 if I had done part 1
-%% differently... Too lazy to refactor :(.
-binary_bit_string_to_value(BinaryBitString, Index, Value) ->
-    Size = byte_size(BinaryBitString),
-    Bit = binary:at(BinaryBitString, Index),
-
-    Value1 = if
-                 Bit == $1 ->
-                     Value + math:pow(2, Size - 1 - Index);
-                 true ->
-                     Value
-             end,
-    if
-        Index == Size - 1 ->
-            Value1;
-        true ->
-            binary_bit_string_to_value(BinaryBitString, Index + 1, Value1)
-    end.
-
 part_two(Lines) ->
     OxygenBinaryBitString = find_number(Lines, 0, most),
     CarbonBinaryBitString = find_number(Lines, 0, least),
 
-    Oxygen = binary_bit_string_to_value(OxygenBinaryBitString, 0, 0),
-    Carbon = binary_bit_string_to_value(CarbonBinaryBitString, 0, 0),
+    Oxygen = binary_to_integer(OxygenBinaryBitString, 2),
+    Carbon = binary_to_integer(CarbonBinaryBitString, 2),
 
     io:format("~p~n", [Oxygen * Carbon]).
 
