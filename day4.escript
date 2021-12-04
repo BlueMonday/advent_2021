@@ -89,7 +89,7 @@ play_bingo([Number | Numbers], Boards) ->
         _ -> play_bingo(Numbers, Boards1)
     end;
 play_bingo(_, _) ->
-    true.
+    false.
 
 part_one(Parts) ->
     NumbersBinary = lists:nth(1, Parts),
@@ -122,7 +122,7 @@ play_bingo_last_winner([Number | Numbers], Boards) ->
         _ -> play_bingo_last_winner(Numbers, Boards2)
     end;
 play_bingo_last_winner(_, _) ->
-    true.
+    false.
 
 part_two(Parts) ->
     NumbersBinary = lists:nth(1, Parts),
