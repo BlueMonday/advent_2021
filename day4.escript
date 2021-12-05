@@ -6,19 +6,19 @@ parse_column([Elem | Elems], Row) ->
 parse_column(_, Row) ->
     lists:reverse(Row).
 
-build_board_map([UnparsedRow | UnparsedRows], Board) ->
+build_board([UnparsedRow | UnparsedRows], Board) ->
     UnparsedRowStr = string:trim(binary_to_list(UnparsedRow)),
     UnparsedColumns = re:split(UnparsedRowStr, "\s+"),
     Row = parse_column(UnparsedColumns, []),
-    build_board_map(UnparsedRows, [Row | Board]);
-build_board_map(_, Board) ->
+    build_board(UnparsedRows, [Row | Board]);
+build_board(_, Board) ->
     lists:reverse(Board).
 
-build_board_maps([UnparsedBoard | UnparsedBoards], Boards) ->
+build_boards([UnparsedBoard | UnparsedBoards], Boards) ->
     UnparsedRows = binary:split(UnparsedBoard, <<"\n">>, [global, trim]),
-    Board = build_board_map(UnparsedRows, []),
-    build_board_maps(UnparsedBoards, [Board | Boards]);
-build_board_maps(_, Boards) ->
+    Board = build_board(UnparsedRows, []),
+    build_boards(UnparsedBoards, [Board | Boards]);
+build_boards(_, Boards) ->
     lists:reverse(Boards).
 
 set_number_in_board(Number, [Row | Rows], ProcessedRows) ->
@@ -97,7 +97,7 @@ part_one(Parts) ->
 
     PartsLength = length(Parts),
     UnparsedBoards = lists:sublist(Parts, 2, PartsLength),
-    Boards = build_board_maps(UnparsedBoards, []),
+    Boards = build_boards(UnparsedBoards, []),
 
     Score = play_bingo(Numbers, Boards),
     io:format("~p~n", [Score]).
@@ -130,7 +130,7 @@ part_two(Parts) ->
 
     PartsLength = length(Parts),
     UnparsedBoards = lists:sublist(Parts, 2, PartsLength),
-    Boards = build_board_maps(UnparsedBoards, []),
+    Boards = build_boards(UnparsedBoards, []),
 
     Score = play_bingo_last_winner(Numbers, Boards),
     io:format("~p~n", [Score]).
