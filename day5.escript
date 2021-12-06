@@ -74,7 +74,6 @@ part_two(Lines) ->
               end,
     SortedLineSegments = lists:foldl(SortFun, [], LineSegments),
     CountMap = populate_count_map(SortedLineSegments, #{}),
-    CountMap = populate_count_map(SortedLineSegments, #{}),
     CountFun = fun (_, Count, Acc) ->
                        case Count >= 2 of
                            true -> Acc +1;
