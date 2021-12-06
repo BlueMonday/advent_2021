@@ -47,8 +47,7 @@ part_two(InitialFish) ->
     DayToCount = lists:foldl(ListToMap, #{}, InitialFish),
     DayToCount1 = smarter_simulate_days(DayToCount, 256),
 
-    SumFun = fun(_, Val, Acc) -> Acc + Val end,
-    Count = maps:fold(SumFun, 0, DayToCount1),
+    Count = lists:sum(maps:values(DayToCount1)),
     io:format("~p~n", [Count]).
 
 main([]) ->
