@@ -14,7 +14,7 @@ part_one(Crabs) ->
 total_fuel_dos(Crabs, FinalPos) ->
     FoldFun = fun(Crab, Sum) ->
                       Distance = abs(Crab - FinalPos),
-                      Sum + lists:sum(lists:seq(0, Distance))
+                      Sum + (Distance / 2) * (Distance + 1)
               end,
     lists:foldl(FoldFun, 0, Crabs).
 
