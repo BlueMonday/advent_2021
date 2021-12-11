@@ -1,6 +1,10 @@
 #!/usr/bin/env escript
 -mode(compile).
 
+build_octo_map(Lines) ->
+    OctoKeyValTuples = [{{X, Y}, lists:nth(X, lists:nth(Y, Lines))} || Y <- lists:seq(1, 10), X <- lists:seq(1, 10)],
+    maps:from_list(OctoKeyValTuples).
+
 flash(Y, X, OctoMap, AlreadyFlashed, Flashes) ->
     case maps:is_key({X, Y}, OctoMap) of
         false -> {OctoMap, AlreadyFlashed, Flashes};
@@ -48,16 +52,14 @@ print_map(OctoMap) ->
                                                 io:format("~p", [maps:get({X, Y}, OctoMap)])
                                         end, lists:seq(1, 10)),
                           io:format("~n", [])
-                          end, lists:seq(1, 10)).
+                          end, lists:seq(1, 10)),
+    io:format("~n", []).
 
 part_one(Lines) ->
-    OctoKeyValTuples = [{{X, Y}, lists:nth(X, lists:nth(Y, Lines))} || Y <- lists:seq(1, 10), X <- lists:seq(1, 10)],
-    OctoMap = maps:from_list(OctoKeyValTuples),
-
+    OctoMap = build_octo_map(Lines),
     FoldFun = fun(Day, {OctoMap1, Flashes}) ->
                       {OctoMap2, Flashes1} = simulate_day(OctoMap1),
                       print_map(OctoMap2),
-                      io:format("~n", []),
 
                       {OctoMap2, Flashes + Flashes1}
               end,
@@ -73,8 +75,7 @@ flash_until_all_flash(Day, OctoMap) ->
     end.
 
 part_two(Lines) ->
-    OctoKeyValTuples = [{{X, Y}, lists:nth(X, lists:nth(Y, Lines))} || Y <- lists:seq(1, 10), X <- lists:seq(1, 10)],
-    OctoMap = maps:from_list(OctoKeyValTuples),
+    OctoMap = build_octo_map(Lines),
     AllFlashDay = flash_until_all_flash(1, OctoMap),
     io:format("~p~n", [AllFlashDay]).
 
