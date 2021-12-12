@@ -9,13 +9,12 @@ build_adjacency_map(Lines) ->
                         [A, B] = string:split(Line, "-"),
                         AdjacencyListA = maps:get(A, AdjacencyMap, []),
                         AdjacencyListB = maps:get(B, AdjacencyMap, []),
-                        AdjacencyMap1 = AdjacencyMap#{A => [B | AdjacencyListA]},
-                        AdjacencyMap1#{B => [A | AdjacencyListB]}
+                        AdjacencyMap#{A => [B | AdjacencyListA], B => [A | AdjacencyListB]}
                 end, #{}, Lines).
 
 find_all_paths(Node, Path, Paths, AdjacencyMap) ->
     case Node of
-        "end" -> [[Node | Path]| Paths];
+        "end" -> [[Node | Path] | Paths];
         _ ->
             NodeInPath = lists:member(Node, Path),
             IsSmallCave = is_small_cave(Node),
