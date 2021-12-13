@@ -8,7 +8,6 @@ parse_points(PointsSection)->
                       {binary_to_integer(X), binary_to_integer(Y)}
               end, PointsList).
 
-
 fold(PointsSet, Axis, Position) ->
     case Axis of
         <<"y">> ->
