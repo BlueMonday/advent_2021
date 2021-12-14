@@ -62,8 +62,8 @@ part_two(Parts) ->
     PairInsertionRules = parse_pair_insertion_rules(RawPairInsertionRules),
 
     PairToCount1 = lists:foldl(fun(_, PairToCount1) ->
-                                  polymer_step_smarter(PairToCount1, PairInsertionRules)
-                          end, PairToCount, lists:seq(1, 40)),
+                                       polymer_step_smarter(PairToCount1, PairInsertionRules)
+                               end, PairToCount, lists:seq(1, 40)),
     CharToCount = maps:fold(fun(Pair, Count, CharToCount) ->
                                     [Left, _] = Pair,
 
